@@ -1,10 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Api\ForgotRequest;
-use App\Http\Requests\Api\GsmRequest;
-use App\Http\Requests\Api\GsmVerifyRequest;
-use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Http\Requests\Api\VerifyRequest;
 use App\Models\Contract;
@@ -43,6 +39,7 @@ class AuthController extends Controller
     /**
      * Register api
      *
+     * @param RegisterRequest $request
      * @return \Illuminate\Http\Response
      */
     public function register(RegisterRequest $request)

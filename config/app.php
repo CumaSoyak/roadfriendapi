@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\ResponseServiceProvider;
+
 return [
 
     /*
@@ -165,7 +167,6 @@ return [
         /*
          * Package Service Providers...
          */
-        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 
         /*
          * Application Service Providers...
@@ -175,6 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ResponseServiceProvider::class,
 
     ],
 
