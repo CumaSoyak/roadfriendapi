@@ -208,14 +208,18 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
-        if (!$token = auth('api')->attempt($credentials)) {
+
+        if (! $token = auth('api')->attempt($credentials)) {
             return response()->error('auth.invalid');
         }
+
         /** @var User $user */
-        $user = Auth::guard('api')->user()->load('image');
-        if (!$user) {
+        $user = Auth::guard('api')->user();
+
+        if (! $user) {
             return response()->error('auth.invalid');
         }
+
         return response()->success(['token' => $token, 'user' => $user]);
     }
 
