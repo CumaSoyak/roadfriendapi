@@ -19,6 +19,8 @@ class User extends Authenticatable implements JWTSubject
         'full_name',
         'email',
         'password',
+
+        'city_id'
     ];
 
     /**
@@ -55,6 +57,11 @@ class User extends Authenticatable implements JWTSubject
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
     }
 
     public function getJWTIdentifier()

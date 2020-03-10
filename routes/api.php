@@ -8,3 +8,7 @@ Route::post('auth/login', ['as' => 'auth.login', 'uses' => 'AuthController@login
 Route::post('auth/logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
 
 Route::get('city', ['as' => 'cities', 'uses'  => 'CityController@index']);
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::resource('trips', 'TripController');
+});

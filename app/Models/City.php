@@ -19,4 +19,9 @@ class City extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function trips()
+    {
+        return $this->belongsToMany(Trip::class, 'trip_cities');
+    }
 }
