@@ -21,6 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->foreign('city_id')->references('id')
+                ->on('cities')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
