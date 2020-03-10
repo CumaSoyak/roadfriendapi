@@ -8,6 +8,7 @@ use App\Models\Device;
 use App\Models\GsmVerify;
 use App\Models\PasswordReset;
 use App\Models\Social;
+use App\Models\Image;
 use Carbon\Carbon;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Contracts\Auth\Guard;
@@ -47,6 +48,14 @@ class AuthController extends Controller
         $user = new User($request->input());
         $user->password = $request->input('password');
         $user->save();
+
+        if($request->hasFile('image')) {
+            $user->image()->delete();
+
+            $user->image()->save(new Image([
+                'image' => $request->file('image'),
+            ]));
+        }
 
         $user = User::query()->find($user->id);
 
@@ -89,6 +98,8 @@ class AuthController extends Controller
                 // Ignore error
             }
         }//if ($provider && $token)
+
+        $user = $user->fresh('image');
 
         return response()->success(['token' => auth('api')->login($user), 'user' => $user]);
     }

@@ -63,6 +63,16 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
         ],
+        'images' => [
+            'driver' => env('FILE_DRIVER', 'local'),
+            'key'    => env('AWS_KEY'),
+            'secret' => env('AWS_SECRET'),
+            'region' => env('AWS_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'root'   => env('FILE_DRIVER', 'local') == 'local' ? public_path('images') : 'images',
+            'url'    => env('FILE_DRIVER', 'local') == 'local' ? env('APP_URL') . '/images' : env('CDN_URL'),
+            'visibility'     => 'public'
+        ],
 
     ],
 

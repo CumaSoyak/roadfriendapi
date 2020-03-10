@@ -47,6 +47,12 @@ class User extends Authenticatable implements JWTSubject
         $this->attributes['password'] = bcrypt($value);
     }
 
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
