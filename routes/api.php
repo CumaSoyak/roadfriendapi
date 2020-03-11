@@ -11,4 +11,7 @@ Route::get('city', ['as' => 'cities', 'uses'  => 'CityController@index']);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('trips', 'TripController');
+
+    // User
+    Route::get('user/trips', ['as' => 'user.trips', 'uses' => 'UserController@trips']);
 });
