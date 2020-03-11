@@ -16,10 +16,7 @@ class TripController extends Controller
      */
     public function index(Request $request)
     {
-        /** @var User $user */
-        $user = $request->user()
-            ->load('city', 'image');
-        $collection = $user->trips()->with('user', 'passenger')->get();
+        $collection = Trip::query()->with('user', 'passenger')->get();
 
         return response()->success($collection);
     }

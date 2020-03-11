@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateCitiesTable extends Migration
@@ -15,9 +16,16 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
+            $table->string('name');
+            $table->string('population');
+            $table->string('country_code');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE cities ADD COLUMN location POINT AFTER name");
+
     }
 
     /**
