@@ -19,7 +19,7 @@ class TripController extends Controller
         /** @var User $user */
         $user = $request->user()
             ->load('city', 'image');
-        $collection = $user->trips()->get();
+        $collection = $user->trips()->with('user', 'passenger')->get();
 
         return response()->success($collection);
     }
