@@ -16,7 +16,7 @@ class TripController extends Controller
      */
     public function index(Request $request)
     {
-        $collection = Trip::query()->with('user', 'passenger')->get();
+        $collection = Trip::query()->with('user.image', 'passenger.image', 'cities')->get();
 
         return response()->success($collection);
     }
@@ -33,6 +33,7 @@ class TripController extends Controller
         $user = $request->user()
             ->load('image', 'city');
 
+
         $model = new Trip($request->input());
         $model->user()->associate($user);
         $model->save();
@@ -40,7 +41,7 @@ class TripController extends Controller
         $cities = $request->input('cities', []);
         $model->cities()->sync($cities);
 
-        return response()->success($model);
+        return response()->success($model->fresh('cities'));
     }
 
     /**

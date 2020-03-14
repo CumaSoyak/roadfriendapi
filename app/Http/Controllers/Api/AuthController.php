@@ -231,6 +231,8 @@ class AuthController extends Controller
             return response()->error('auth.invalid');
         }
 
+        $user = $user->fresh('image');
+
         return response()->success(['token' => $token, 'user' => $user]);
     }
 
