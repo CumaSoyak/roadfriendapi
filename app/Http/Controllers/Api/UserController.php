@@ -12,7 +12,7 @@ class UserController extends Controller
         /** @var User $user */
         $user = $request->user();
 
-        $collection = $user->trips()->with('user.image', 'passenger.image')->get();
+        $collection = $user->trips()->with('user.image', 'passenger.image', 'startCity', 'endCity')->get();
 
         return response()->success($collection);
     }

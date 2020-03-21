@@ -31,6 +31,14 @@ class CreateTripsTable extends Migration
             $table->foreign('passenger_id')->references('id')
                 ->on('users')->onUpdate('cascade')->onDelete('cascade');
 
+            $table->unsignedBigInteger('start_city_id')->nullable();
+            $table->foreign('start_city_id')->references('id')
+                ->on('cities')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->unsignedBigInteger('end_city_id')->nullable();
+            $table->foreign('end_city_id')->references('id')
+                ->on('cities')->onUpdate('cascade')->onDelete('cascade');
+
         });
     }
 

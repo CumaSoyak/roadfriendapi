@@ -16,9 +16,32 @@ class TripController extends Controller
      */
     public function index(Request $request)
     {
-        $collection = Trip::query()->with('user.image', 'passenger.image', 'cities')->get();
+        $status = $request->input('status');
+        $startCity = $request->input('startCity');
+        $endCity = $request->input('endCity');
 
-        return response()->success($collection);
+        /** @var Trip $query */
+        $query = Trip::query()->with('user.image', 'passenger.image', 'startCity', 'endCity');
+
+        if($status) {
+            $query->where('status', $status);
+        }
+
+        if($startCity) {
+            $query->whereHas('startCity', function ($query) use ($startCity) {
+                $query->where('name', $startCity);
+            });
+        }
+
+        if($endCity) {
+            $query->whereHas('endCity', function ($query) use ($startCity) {
+                $query->where('name', $startCity);
+            });
+        }
+
+        $model  = $query->get();
+
+        return response()->success($model);
     }
 
     /**
@@ -34,14 +57,30 @@ class TripController extends Controller
             ->load('image', 'city');
 
 
+        $startCityId = $request->input('start_city_id');
+        $endCityId = $request->input('end_city_id');
+
+        if($startCityId) {
+            $startCity = City::query()->find($startCityId);
+            if(!$startCity) {
+                return response()->error('city.not-found');
+            }
+        }
+
+        if($endCityId) {
+            $endCity = City::query()->find($endCityId);
+            if(!$endCity) {
+                return response()->error('city.not-found');
+            }
+        }
+
         $model = new Trip($request->input());
         $model->user()->associate($user);
+        $model->startCity()->associate($startCity);
+        $model->endCity()->associate($endCity);
         $model->save();
 
-        $cities = $request->input('cities', []);
-        $model->cities()->sync($cities);
-
-        return response()->success($model->fresh('cities'));
+        return response()->success($model);
     }
 
     /**

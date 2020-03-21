@@ -28,10 +28,19 @@ class Trip extends Model
         'description',
 
         'user_id',
-        'passenger_id'
+        'passenger_id',
+
+        'start_city_id',
+        'end_cit_id',
     ];
 
     protected $hidden = [
+        'user_id',
+        'passenger_id',
+
+        'start_city_id',
+        'end_cit_id',
+
         'created_at',
         'updated_at',
         'deleted_at'
@@ -47,8 +56,13 @@ class Trip extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function cities()
+    public function startCity()
     {
-        return $this->belongsToMany(City::class, 'trip_cities');
+        return $this->belongsTo(City::class);
+    }
+
+    public function endCity()
+    {
+        return $this->belongsTo(City::class);
     }
 }
